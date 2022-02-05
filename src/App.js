@@ -1,23 +1,49 @@
-import logo from './logo.svg';
+import contacts from "./contacts.json";
 import './App.css';
+import Contact from "./component/contact";
+import { useState } from "react";
 
 function App() {
+  let actors = contacts.slice(0, 5)
+  const [state, addStatus] = useState(actors);
+  console.log(actors)
+
+  let handleAdd = () => {
+    let random = Math.floor(Math.random() * contacts.length);
+
+    let total = [...state]
+    let randomActor = contacts[random];
+    if(!total.includes(randomActor)){
+      total.push(randomActor)
+    }
+    addStatus(total)
+  }
+
+  let handleSortName = () => {
+    let byName = [...state].sort((a,b) => a.name.charCodeAt(0)-b.name.charCodeAt(0))
+    addStatus(byName)
+  }
+
+  let handleSortPopulatiry = () => {
+    let byPopularity = [...state].sort((a,b) => a.popularity-b.popularity)
+    addStatus(byPopularity)
+  }
+
+  let handleDelete
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <button onClick={handleAdd}>Add Contact</button>
+      <br></br>
+      <button onClick={handleSortName}>sort by Name</button>
+      <button onClick={handleSortPopulatiry}>Sort by Popularity</button>
+      <div>
+        {state.map((contact, i) => {
+          return (
+            <Contact key={i} pictureUrl={contact.pictureUrl} name={contact.name} popularity={contact.popularity} wonOscar={contact.wonOscar} wonEmmy={contact.wonEmmy} />
+          )
+        })}
+      </div>
     </div>
   );
 }
