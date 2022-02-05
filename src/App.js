@@ -29,7 +29,11 @@ function App() {
     addStatus(byPopularity)
   }
 
-  let handleDelete
+  let handleDelete = (id) => {
+    let total = [...state]
+    let removedContact = total.filter(contact => contact.id !== id)
+    addStatus(removedContact);
+  }
 
   return (
     <div className="App">
@@ -40,7 +44,7 @@ function App() {
       <div>
         {state.map((contact, i) => {
           return (
-            <Contact key={i} pictureUrl={contact.pictureUrl} name={contact.name} popularity={contact.popularity} wonOscar={contact.wonOscar} wonEmmy={contact.wonEmmy} />
+            <Contact key={i} id={contact.id} pictureUrl={contact.pictureUrl} name={contact.name} popularity={contact.popularity} wonOscar={contact.wonOscar} wonEmmy={contact.wonEmmy} onDelete={handleDelete}/>
           )
         })}
       </div>

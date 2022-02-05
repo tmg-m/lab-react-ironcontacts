@@ -1,13 +1,17 @@
-function Contact({ name, pictureUrl, popularity, wonOscar, wonEmmy }) {
+function Contact({ id, name, pictureUrl, popularity, wonOscar, wonEmmy, onDelete }) {
   let oscarTrophy;
-  let emmyTrophy
+  let emmyTrophy;
   if (wonOscar) {
-    oscarTrophy = "🏆"
+    oscarTrophy = "🏆";
   }
   if (wonEmmy) {
-    emmyTrophy = "🌟"
+    emmyTrophy = "🌟";
   }
-  popularity = Math.round(popularity)
+
+  const handleOnRemove = () => {
+    onDelete(id)
+  }
+
   return (
     <>
       <table>
@@ -19,17 +23,20 @@ function Contact({ name, pictureUrl, popularity, wonOscar, wonEmmy }) {
           <th>Won Emmy</th>
         </tr>
         <tr>
-          <td><img width="100px" src={pictureUrl} alt="photo"/></td>
+          <td>
+            <img width="100px" src={pictureUrl} alt="photo" />
+          </td>
           <td>{name}</td>
           <td>{popularity}</td>
           <td>{oscarTrophy}</td>
           <td>{emmyTrophy}</td>
+          <td>
+            <button onClick={handleOnRemove}>Remove</button>
+          </td>
         </tr>
       </table>
-
-      
     </>
-  )
+  );
 }
 
 export default Contact;
